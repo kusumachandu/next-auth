@@ -2,9 +2,8 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Layout from "../../layout/layout";
-import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/router";
-import { useSignInMutation } from "../../services/use-signin";
 
 interface LoginFormValues {
   email: string;
@@ -22,11 +21,18 @@ const initialValues: LoginFormValues = {
 };
 
 const LoginForm: React.FC = () => {
- const { mutate: signin } = useSignInMutation();
+
+  const router = useRouter();
 
   const handleSubmit = (values: LoginFormValues) => {
     console.log(values);
-    signin(values);
+    signIn('credentials', {
+      email: values.email,
+      password: values.password,
+      redirect: false,
+    });
+
+    router.push('/');
   };
 
   return (
