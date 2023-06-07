@@ -2,6 +2,7 @@ import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Layout from "../../layout/layout";
+import { useSignuUpMutation } from "../../services/use-signup";
 
 interface RegistrationFormValues {
   firstName: string;
@@ -32,8 +33,19 @@ const initialValues: RegistrationFormValues = {
 };
 
 const RegistrationForm: React.FC = () => {
+
+  const {mutate: signUp} = useSignuUpMutation()
+
   const handleSubmit = (values: RegistrationFormValues) => {
     console.log(values);
+
+    try {
+      signUp(values);
+
+    } catch (error: any) {
+      console.log(error.message)
+    }
+
     // Perform registration logic here
   };
 

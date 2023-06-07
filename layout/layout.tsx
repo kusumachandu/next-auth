@@ -1,5 +1,3 @@
-import Navbar from "@/components/navbar/Navbar"
-
 type layoutProps =  {
   children: React.ReactNode,
 }
